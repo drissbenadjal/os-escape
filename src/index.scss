@@ -1,0 +1,182 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  cursor: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.login {
+  position: relative;
+  background-color: #008080;
+  width: 100%;
+  height: 100vh;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .window-login {
+    position: absolute;
+    z-index: 1000;
+    background-color: #d3d3d3;
+    width: 530px;
+    height: 150px;
+    //faire un border a l'interieur
+    border: 2px solid #bababa;
+    box-shadow: 0 0 10px 0 #000;
+
+    .window-login__header {
+      width: 100%;
+      height: 25px;
+      //faire un gradient avec #000684 et #1084d0
+      background: linear-gradient(90deg, #000684, #1084d0);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      padding: 0 10px;
+    }
+
+    .window-login__content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 3px;
+      padding: 0 10px;
+
+      .window-login__content__left {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 100%;
+
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      .window-login__content__center {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        padding-top: 15px;
+
+        h3 {
+          font-weight: 200;
+          font-size: .8rem;
+          margin: 0;
+        }
+
+        .window-login__content__center__group {
+          //faire style ancien input
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+          margin-top: 10px;
+
+          label {
+            font-size: .85rem;
+            font-weight: 600;
+          }
+
+          input {
+            border: inset 2px #00000093;
+          }
+        }
+      }
+
+      .window-login__content__right {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        height: 100%;
+        width: 150px;
+        padding-top: 15px;
+        gap: 7px;
+
+        button {
+          width: 100%;
+          height: 25px;
+          border-radius: 0 !important;
+          background-color: #d3d3d3;
+        }
+      }
+    }
+  }
+}
+
+.desktop {
+  position: relative;
+  background-color: #008080;
+  width: 100%;
+  height: 100vh;
+  user-select: none;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    color: #fff;
+    font-weight: 200;
+    padding-top: 10px;
+    padding-left: 10px;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      height: fit-content;
+      gap: 5px;
+
+      span {
+        font-size: .95rem;
+      }
+
+      &:hover span {
+        text-decoration: underline;
+      }
+
+      img {
+        width: 55px;
+        height: 55px;
+      }
+    }
+  }
+
+  .taskbar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #b6bbb7;
+    border: outset 2px #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    color: #fff;
+  }
+}

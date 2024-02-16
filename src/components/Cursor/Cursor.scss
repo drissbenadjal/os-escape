@@ -1,0 +1,19 @@
+.cursor{
+    position: absolute;
+    z-index: 10000;
+    pointer-events: none;
+    user-select: none;
+    width: 15px;
+
+    img {
+        position: absolute;
+        top: 70%;
+        left: 20%;
+        width: 15px;
+        transform: translate(-50%, -20%);
+    }
+
+    .cursor-hover {
+        scale: 1.35 !important;
+    }
+}
