@@ -15,7 +15,6 @@
     "react-dom": "^18.2.0",
     "sass": "^1.70.0",
     "socket.io-client": "^4.7.5",
-    "xterm-for-react": "^1.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
