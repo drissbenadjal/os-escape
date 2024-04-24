@@ -19,6 +19,45 @@ input {
   border: inset 2px #00000093;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.btn {
+  transition: all 0.2s ease;
+  border-radius: 0.125rem;
+  position: relative;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+    background: transparent;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+
+  &:before {
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid #858585;
+    border-bottom: 2px solid #858585;
+  }
+
+  &:not(:disabled):not(.disabled):active:before,
+  &btn:not(:disabled):not(.disabled):active:focus:before {
+    border-color: transparent;
+    color: #000;
+  }
+}
+
 .login {
   position: relative;
   background-color: #008080;
@@ -124,93 +163,121 @@ input {
   width: 100%;
   height: 100vh;
   user-select: none;
+}
 
-  .desktopApps {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.desktopApps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: fit-content;
+  height: 100%;
+  color: #fff;
+  font-weight: 200;
+  padding-top: 10px;
+  padding-left: 10px;
+
+  li {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     width: fit-content;
+    height: fit-content;
+    gap: 5px;
+
+    span {
+      font-size: 0.95rem;
+    }
+
+    &:hover span {
+      text-decoration: underline;
+    }
+
+    img {
+      width: 55px;
+      height: 55px;
+    }
+  }
+}
+
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 48px;
+  background-color: #b6bbb7;
+  border: outset 2px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 2px;
+  color: #fff;
+
+  .windows-active {
+    display: flex;
+    flex: 1;
+    gap: 2px;
+  }
+
+  .nav-link {
     height: 100%;
-    color: #fff;
-    font-weight: 200;
-    padding-top: 10px;
-    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 4px 10px;
+    overflow: hidden;
+    border-radius: 1px;
+    position: relative;
+    height: 38px;
 
-    li {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: fit-content;
-      height: fit-content;
-      gap: 5px;
+    img {
+      width: 24px;
+      height: 24px;
+    }
 
-      span {
-        font-size: 0.95rem;
-      }
+    &:hover {
+      cursor: pointer;
+    }
 
-      &:hover span {
-        text-decoration: underline;
-      }
-
-      img {
-        width: 55px;
-        height: 55px;
-      }
+    &:before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-top: 2px solid #fcfcfc;
+      border-left: 2px solid #fcfcfc;
+      border-bottom: 2px solid #08080e;
+      border-right: 2px solid #08080e;
     }
   }
 
-  .taskbar {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-    background-color: #b6bbb7;
-    border: outset 2px #ffffff;
+  .time {
+    padding: 4px 10px;
+    height: 38px;
+    text-align: center;
+    border-top: 1px solid #08080e;
+    border-left: 1px solid #08080e;
+    border-right: 1px solid #fcfcfc;
+    border-bottom: 1px solid #fcfcfc;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 2px;
-    padding: 0 0px;
-    color: #fff;
-
-    .app {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      color: #000;
-      font-weight: 700;
-      font-size: 1.2rem;
-      border: inset 3px #00000093;
-      padding: 1px 3px;
-      overflow: hidden;
-      border-radius: 1px;
-
-      img {
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .windows-active {
-      img {
-        width: 30px;
-        height: 30px;
-      }
-    }
+    color: black;
+    font-weight: 700;
   }
 }
 

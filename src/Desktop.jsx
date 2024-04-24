@@ -1,9 +1,10 @@
 import Window from './components/Window/Window';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Desktop() {
   const [windows, setWindows] = useState([]);
-  const [setzIndex, setSetzIndex] = useState(1);
+  const [zIndex, setZIndex] = useState(1);
+  const [time, setTime] = useState(new Date());
 
   const openWindow = (e, index) => {
     e.preventDefault();
@@ -14,6 +15,16 @@ export default function Desktop() {
   const closeWindow = (index) => {
     setWindows(windows.filter((item) => item !== index));
   };
+
+  useEffect(() => {
+    console.log(windows);
+  }, [windows]);
+
+  useEffect(() => {
+    setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }, []);
 
   return (
     <div className="desktop">
@@ -33,27 +44,37 @@ export default function Desktop() {
           index={index}
           indexWindow={index}
           closeWindow={closeWindow}
-          setzIndex={setzIndex}
-          setSetzIndex={setSetzIndex}
+          zIndex={zIndex}
+          setZIndex={setZIndex}
         />
       ))}
       <nav className="taskbar">
-        <div className="app">
+        <div className="nav-link cursor-hover">
           <img src="./assets/images/logo.svg" alt="" />
           Start
         </div>
-        <ul className="windows-active app">
+        <ul className="windows-active">
           {windows.map((index) => (
-            <li key={index}>
+            <li key={index} className="nav-link cursor-hover">
               <img
-                src="./assets/images/computer.png"
+                src={`./assets/images/${index === 0 ? 'web' : 'terminal'}.png`}
                 alt=""
                 draggable="false"
               />
-              <span>Window {index}</span>
+              <span>
+                {index === 0 && 'Web'}
+                {index === 1 && 'Tim Chat'}
+              </span>
             </li>
           ))}
         </ul>
+        <div className="time">
+          {time.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          })}
+        </div>
       </nav>
     </div>
   );

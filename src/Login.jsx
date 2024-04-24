@@ -112,8 +112,12 @@ export default function Login({ setIsLoggedIn }) {
             </div>
           </div>
           <div className="window-login__content__right">
-            <button type="submit">OK</button>
-            <button onClick={(e) => Cancel(e)}>Cancel</button>
+            <button type="submit" className="btn">
+              OK
+            </button>
+            <button className="btn" onClick={(e) => Cancel(e)}>
+              Cancel
+            </button>
           </div>
         </div>
       </form>

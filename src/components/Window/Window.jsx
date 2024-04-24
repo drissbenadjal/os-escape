@@ -1,25 +1,33 @@
 import './Window.scss';
 import { useEffect, useRef, useState } from 'react';
-import { XTerm } from 'xterm-for-react';
 import { io } from 'socket.io-client';
 
 // eslint-disable-next-line react/prop-types
-const Window = ({ indexWindow, closeWindow, setzIndex, setSetzIndex }) => {
-  const socket = io('http://localhost:3001');
+const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
   const window = useRef(null);
   const [write, setWrite] = useState('');
+  const formchat = useRef(null);
+  const socket = io('http://localhost:3001');
 
   useEffect(() => {
     if (indexWindow === 1) {
+      formchat.current?.querySelector('input').focus();
       socket.on('receive-pc-message', (message) => {
-        xtermRef.current.terminal.writeln(message);
+        formchat.current.insertAdjacentHTML(
+          'beforebegin',
+          `<p class="message-receive">${message}</p>`
+        );
       });
     }
   }, [indexWindow]);
 
   const changeZIndex = () => {
-    setSetzIndex(setzIndex + 1);
-    window.current.style.zIndex = setzIndex + 1;
+    if (indexWindow === 1) {
+      formchat.current?.querySelector('input').focus();
+    }
+
+    setZIndex(zIndex + 1);
+    window.current.style.zIndex = zIndex + 1;
   };
 
   useEffect(() => {
@@ -80,49 +88,36 @@ const Window = ({ indexWindow, closeWindow, setzIndex, setSetzIndex }) => {
     }
   }, [window]);
 
-  const xtermRef = useRef(null);
-  useEffect(() => {
-    if (!xtermRef.current) return;
-    // You can call any method in XTerm.js by using 'xterm xtermRef.current.terminal.[What you want to call]
-    xtermRef.current.terminal.writeln('Ask me anything about Tim Berners-Lee');
-    //mettre un retour à la ligne
-    xtermRef.current.terminal.writeln('');
-  }, []);
-
-  const onWrite = (data) => {
-    console.log(data);
-    console.log(write);
-    //quand c'est enter on envoie le message
-    if (data === '\r') {
-      if (write === '/clear') {
-        setWrite('');
-        setTimeout(() => {
-          //supprimermeme la ligne de la commande
-          xtermRef.current.terminal.write('\b \b \b \b \b \b');
-          xtermRef.current.terminal.clear();
-          xtermRef.current.terminal.writeln(
-            'Ask me anything about Tim Berners-Lee'
-          );
-          xtermRef.current.terminal.writeln('');
-        }, 50);
-        return;
-      } else {
-        socket.emit('send-pc-message', write);
-        setWrite('');
-        xtermRef.current.terminal.writeln('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (write === 'exit') {
+      closeWindow(1);
+      return;
+    } else if (write === '/clear') {
+      //supprimer les messages et les réponses
+      if (formchat.current.querySelectorAll('.message')) {
+        formchat.current.querySelectorAll('.message').forEach((message) => {
+          message.remove();
+        });
       }
+      if (formchat.current.querySelectorAll('.message-receive')) {
+        formchat.current
+          .querySelectorAll('.message-receive')
+          .forEach((message) => {
+            message.remove();
+          });
+      }
+      formchat.current.querySelector('input').value = '';
+      setWrite('');
       return;
     }
-    //si c'est /clear on efface tout
-    //quand on appuie sur backspace on supprime le dernier caractère
-    else if (data === '\x7f') {
-      xtermRef.current.terminal.write('\b \b');
-      return;
-    } else {
-      setWrite((prev) => prev + data);
-      xtermRef.current.terminal.write(data);
-      return;
-    }
+    socket.emit('send-pc-message', write);
+    formchat.current.insertAdjacentHTML(
+      'beforebegin',
+      `<p class="message">${write}</p>`
+    );
+    formchat.current.querySelector('input').value = '';
+    setWrite('');
   };
 
   return (
@@ -152,14 +147,14 @@ const Window = ({ indexWindow, closeWindow, setzIndex, setSetzIndex }) => {
       )}
       {indexWindow === 1 && (
         <div className="window__content">
-          {/* <h1>Tim BERNERS-LEE Chat</h1> */}
-          <XTerm
-            ref={xtermRef}
-            onData={(data) => onWrite(data)}
-            options={{ width: '100%', height: '100%' }}
-            onResize={(size) => console.log(size)}
-            className="terminalChat"
-          />
+          <div className="terminalChat">
+            <div className="terminalChat__content">
+              <p>Ask me anything about Tim Berners-Lee</p>
+              <form onSubmit={handleSubmit} ref={formchat}>
+                <input type="text" onChange={(e) => setWrite(e.target.value)} />
+              </form>
+            </div>
+          </div>
         </div>
       )}
     </div>
