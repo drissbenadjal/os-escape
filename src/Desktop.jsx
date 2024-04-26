@@ -1,10 +1,12 @@
 import Window from './components/Window/Window';
 import { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 
 export default function Desktop() {
   const [windows, setWindows] = useState([]);
   const [zIndex, setZIndex] = useState(1);
   const [time, setTime] = useState(new Date());
+  const socket = io('https://apimmievent.alwaysdata.net/');
 
   const openWindow = (e, index) => {
     e.preventDefault();
@@ -20,10 +22,21 @@ export default function Desktop() {
     console.log(windows);
   }, [windows]);
 
+  const openWindowAdmin = () => {
+    setWindows([...windows, 3]);
+  }
+
   useEffect(() => {
     setInterval(() => {
       setTime(new Date());
     }, 1000);
+
+    //quand on fait shift + i + a
+    window.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A' || e.key === 'a') {
+        openWindowAdmin();
+      }
+    });
   }, []);
 
   return (
@@ -41,6 +54,10 @@ export default function Desktop() {
           <img src="./assets/images/terminal.png" alt="" draggable="false" />
           <span> test</span>
         </li> */}
+        {/* <li onDoubleClick={(e) => openWindow(e, 3)}>
+          <img src="./assets/images/terminal.png" alt="" draggable="false" />
+          <span> test</span>
+        </li> */}
       </ul>
       {windows.map((index) => (
         <Window
@@ -50,6 +67,7 @@ export default function Desktop() {
           closeWindow={closeWindow}
           zIndex={zIndex}
           setZIndex={setZIndex}
+          socket={socket}
         />
       ))}
       <nav className="taskbar">

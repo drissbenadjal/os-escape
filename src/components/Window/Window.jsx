@@ -1,13 +1,11 @@
 import './Window.scss';
 import { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
 
 // eslint-disable-next-line react/prop-types
-const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
+const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
   const window = useRef(null);
   const [write, setWrite] = useState('');
   const formchat = useRef(null);
-  const socket = io('https://apimmievent.alwaysdata.net');
 
   useEffect(() => {
     if (indexWindow === 1) {
@@ -18,6 +16,15 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
           `<p class="message-receive">$ ${message}</p>`
         );
       });
+    }
+    if (indexWindow === 3) {
+      socket.on('tim-message-received', (message) => {
+        document.querySelector('.message-admin').insertAdjacentHTML(
+          'beforeend',
+          `<p class="message-receive">player: ${message}</p>`
+        );
+      }
+      );
     }
   }, [indexWindow]);
 
@@ -124,6 +131,18 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
     setWrite('');
   };
 
+  const handleAdminChat = (e) => {
+    e.preventDefault();
+    const message = e.target.querySelector('input').value;
+    socket.emit('send-admin-message', message);
+    //mettre le message dans la fenetre
+    document.querySelector('.message-admin').insertAdjacentHTML(
+      'beforeend',
+      `<p class="message">admin: ${message}</p>`
+    );
+    e.target.querySelector('input').value = '';
+  }
+
   return (
     <div
       className="window"
@@ -135,6 +154,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
         {indexWindow === 0 && <p>World Wide Web</p>}
         {indexWindow === 1 && <p>Tim Berners-Lee Chat</p>}
         {indexWindow === 2 && <p>Web berners-lee</p>}
+        {indexWindow === 3 && <p>Admin Chat</p>}
         <button
           className="closeButton"
           onClick={() => {
@@ -202,6 +222,14 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
               Hello, I'm Tim Berners-Lee, the inventor of the World Wide Web.
             </h1>
           </div>
+        </div>
+      )}
+      {indexWindow === 3 && (
+        <div className="window__content">
+          <div className="message-admin"></div>
+          <form onSubmit={(e) => handleAdminChat(e)}>
+            <input type="text" placeholder="Message" />
+          </form>
         </div>
       )}
     </div>
