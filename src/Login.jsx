@@ -1,13 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ setIsLoggedIn }) {
+  const [errorLogin, setErrorLogin] = useState(false);
   const windowLogin = useRef(null);
+  const error = useRef(null);
 
   useEffect(() => {
     if (!windowLogin.current) return;
+    if (!error.current) return;
     var fenetre = windowLogin.current;
+    var errorFenetre = error.current;
     move(fenetre);
+    move(errorFenetre);
 
     var stock;
     function move(window) {
@@ -59,11 +64,16 @@ export default function Login({ setIsLoggedIn }) {
         true
       );
     }
-  }, [windowLogin]);
+  }, [windowLogin, error]);
 
   const Login = (e) => {
     e.preventDefault();
-    setIsLoggedIn(true);
+    //si le password est bon
+    if (document.getElementById('password').value === 'test') {
+      setIsLoggedIn(true);
+    } else {
+      setErrorLogin(true);
+    }
   };
 
   const Cancel = (e) => {
@@ -72,55 +82,72 @@ export default function Login({ setIsLoggedIn }) {
   };
 
   return (
-    <div className="login">
-      <form
-        className="window-login"
-        ref={windowLogin}
-        onSubmit={(e) => Login(e)}
-      >
-        <div className="window-login__header">
-          <div>Welcome to windows</div>
-          <div></div>
-        </div>
-        <div className="window-login__content">
-          <div className="window-login__content__left">
-            <img src="./assets/images/key.png" alt="key" draggable="false" />
+    <>
+      <div className="login">
+        <form
+          className="window-login"
+          ref={windowLogin}
+          onSubmit={(e) => Login(e)}
+        >
+          <div className="window-login__header">
+            <div>Welcome to windows</div>
+            <div></div>
           </div>
-          <div className="window-login__content__center">
-            <h3>Type a user name and password to log on to Windows.</h3>
-            <div className="window-login__content__center__group">
-              <label htmlFor="username">User name:</label>
-              <input
-                type="text"
-                placeholder="User name"
-                id="username"
-                defaultValue={`Tim Berners-Lee`}
-                readOnly
-              />
+          <div className="window-login__content">
+            <div className="window-login__content__left">
+              <img src="./assets/images/key.png" alt="key" draggable="false" />
             </div>
-            <div className="window-login__content__center__group">
-              <label htmlFor="password" style={{ marginRight: '6px' }}>
-                Password:
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                id="password"
-                defaultValue={`************`}
-                readOnly
-              />
+            <div className="window-login__content__center">
+              <h3>Type a user name and password to log on to Windows.</h3>
+              <div className="window-login__content__center__group">
+                <label htmlFor="username">User name:</label>
+                <input
+                  type="text"
+                  placeholder="User name"
+                  id="username"
+                  defaultValue={`Tim Berners-Lee`}
+                  readOnly
+                />
+              </div>
+              <div className="window-login__content__center__group">
+                <label htmlFor="password" style={{ marginRight: '6px' }}>
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                // defaultValue={`************`}
+                // readOnly
+                />
+              </div>
+            </div>
+            <div className="window-login__content__right">
+              <button type="submit" className="btn">
+                OK
+              </button>
+              <button className="btn" onClick={(e) => Cancel(e)}>
+                Cancel
+              </button>
             </div>
           </div>
-          <div className="window-login__content__right">
-            <button type="submit" className="btn">
-              OK
-            </button>
-            <button className="btn" onClick={(e) => Cancel(e)}>
-              Cancel
+        </form>
+        {
+          errorLogin &&
+          <div className="error-message" ref={error}>
+            <div className="window-login__header">
+              <div>
+                Incorrect password.
+              </div>
+              <div></div>
+            </div>
+            <p>Incorrect password. Try again.</p>
+            <button className="btn" onClick={() => setErrorLogin(false)}>
+              Fermé
             </button>
           </div>
-        </div>
-      </form>
-    </div>
+        }
+      </div>
+    </>
   );
 }
