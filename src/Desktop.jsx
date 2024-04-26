@@ -24,7 +24,7 @@ export default function Desktop() {
 
   const openWindowAdmin = () => {
     setWindows([...windows, 3]);
-  }
+  };
 
   useEffect(() => {
     setInterval(() => {
@@ -42,6 +42,19 @@ export default function Desktop() {
       }
     });
   }, []);
+
+  const getIcon = (index) => {
+    switch (index) {
+      case 0:
+        return 'web';
+      case 1:
+        return 'terminal';
+      case 2:
+        return 'web';
+      default:
+        return 'web';
+    }
+  };
 
   return (
     <div className="desktop">
@@ -72,6 +85,8 @@ export default function Desktop() {
           zIndex={zIndex}
           setZIndex={setZIndex}
           socket={socket}
+          windows={windows}
+          setWindows={setWindows}
         />
       ))}
       <nav className="taskbar">
@@ -83,13 +98,14 @@ export default function Desktop() {
           {windows.map((index) => (
             <li key={index} className="nav-link cursor-hover">
               <img
-                src={`./assets/images/${index === 0 ? 'web' : 'terminal'}.png`}
+                src={`./assets/images/${getIcon(index)}.png`}
                 alt=""
                 draggable="false"
               />
               <span>
                 {index === 0 && 'Web'}
                 {index === 1 && 'Tim Chat'}
+                {index === 2 && 'Web'}
               </span>
             </li>
           ))}

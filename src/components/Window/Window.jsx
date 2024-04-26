@@ -2,7 +2,15 @@ import './Window.scss';
 import { useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
-const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
+const Window = ({
+  indexWindow,
+  closeWindow,
+  zIndex,
+  setZIndex,
+  socket,
+  windows,
+  setWindows,
+}) => {
   const window = useRef(null);
   const [write, setWrite] = useState('');
   const formchat = useRef(null);
@@ -15,16 +23,21 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
           'beforebegin',
           `<p class="message-receive">$ ${message}</p>`
         );
+
+        // scroll to bottom
+        const chat = document.querySelector('.terminalChat__content');
+        chat.scrollTop = chat.scrollHeight;
       });
     }
     if (indexWindow === 3) {
       socket.on('tim-message-received', (message) => {
-        document.querySelector('.message-admin').insertAdjacentHTML(
-          'beforeend',
-          `<p class="message-receive">player: ${message}</p>`
-        );
-      }
-      );
+        document
+          .querySelector('.message-admin')
+          .insertAdjacentHTML(
+            'beforeend',
+            `<p class="message-receive">player: ${message}</p>`
+          );
+      });
     }
   }, [indexWindow]);
 
@@ -99,7 +112,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
     }
   }, [window]);
 
-  const handleSubmit = (e) => {
+  const handleChat = (e) => {
     e.preventDefault();
     if (write === 'exit') {
       closeWindow(1);
@@ -122,6 +135,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
       setWrite('');
       return;
     }
+
     socket.emit('send-pc-message', write);
     formchat.current.insertAdjacentHTML(
       'beforebegin',
@@ -131,17 +145,27 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
     setWrite('');
   };
 
+  const passwordSubmit = (e) => {
+    e.preventDefault();
+    const password = e.target.querySelector('input').value;
+    if (password === 'http://cern.html') {
+      setWindows([...windows.filter((item) => item !== 0), 2]);
+    }
+  };
+
   const handleAdminChat = (e) => {
     e.preventDefault();
     const message = e.target.querySelector('input').value;
     socket.emit('send-admin-message', message);
     //mettre le message dans la fenetre
-    document.querySelector('.message-admin').insertAdjacentHTML(
-      'beforeend',
-      `<p class="message">admin: ${message}</p>`
-    );
+    document
+      .querySelector('.message-admin')
+      .insertAdjacentHTML(
+        'beforeend',
+        `<p class="message">admin: ${message}</p>`
+      );
     e.target.querySelector('input').value = '';
-  }
+  };
 
   return (
     <div
@@ -165,7 +189,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
         </button>
       </div>
       {indexWindow === 0 && (
-        <form className="window__web" action="">
+        <form className="window__web" onSubmit={passwordSubmit}>
           <label htmlFor="password">Enter the code : </label>
           <input type="text" placeholder="•••••••" name="password" />
           <button className="window__web__input btn">Validate</button>
@@ -177,7 +201,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
             <div className="terminalChat__content">
               <p className="first">You need some help ? Talk to Tim !</p>
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleChat}
                 ref={formchat}
                 className="terminalChat__inputContainer"
               >
@@ -213,7 +237,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
             <input
               type="text"
               placeholder="Search or enter website name"
-              defaultValue="https://cern.html/"
+              defaultValue="http://cern.html"
               readOnly
             />
           </div>
@@ -225,7 +249,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex, socket }) => {
         </div>
       )}
       {indexWindow === 3 && (
-        <div className="window__content">
+        <div className="window__content admin-chat">
           <div className="message-admin"></div>
           <form onSubmit={(e) => handleAdminChat(e)}>
             <input type="text" placeholder="Message" />

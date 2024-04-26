@@ -58,8 +58,6 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    // gap: 3px;
-    // padding: 0 10px;
 
     .window__content__left {
       display: flex;
@@ -157,6 +155,8 @@
   background-color: #000;
   font-family: 'vt323', Times, serif;
   font-size: 1.25rem;
+  overflow: auto;
+  max-height: 80vh;
 
   .terminalChat__content {
     color: #fff;
@@ -273,4 +273,9 @@
   p {
     font-size: 0.7rem;
   }
+}
+
+.admin-chat {
+  max-height: 80vh;
+  overflow: auto;
 }
