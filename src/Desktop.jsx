@@ -6,6 +6,7 @@ export default function Desktop() {
   const [windows, setWindows] = useState([]);
   const [zIndex, setZIndex] = useState(1);
   const [time, setTime] = useState(new Date());
+  const [note, setNote] = useState('');
   const socket = io('https://apimmievent.alwaysdata.net/');
 
   const openWindow = (e, index) => {
@@ -51,6 +52,8 @@ export default function Desktop() {
         return 'terminal';
       case 2:
         return 'web';
+      case 4:
+        return 'note';
       default:
         return 'web';
     }
@@ -61,16 +64,16 @@ export default function Desktop() {
       <ul className="desktopApps">
         <li onDoubleClick={(e) => openWindow(e, 0)}>
           <img src="./assets/images/web.png" alt="" draggable="false" />
-          <span>Web</span>
+          <span>The project</span>
         </li>
         <li onDoubleClick={(e) => openWindow(e, 1)}>
           <img src="./assets/images/terminal.png" alt="" draggable="false" />
           <span>Tim Chat</span>
         </li>
-        {/* <li onDoubleClick={(e) => openWindow(e, 2)}>
-          <img src="./assets/images/terminal.png" alt="" draggable="false" />
-          <span> test</span>
-        </li> */}
+        <li onDoubleClick={(e) => openWindow(e, 4)}>
+          <img src="./assets/images/note.png" alt="" draggable="false" />
+          <span>Bloc-note</span>
+        </li>
         {/* <li onDoubleClick={(e) => openWindow(e, 3)}>
           <img src="./assets/images/terminal.png" alt="" draggable="false" />
           <span> test</span>
@@ -87,6 +90,8 @@ export default function Desktop() {
           socket={socket}
           windows={windows}
           setWindows={setWindows}
+          note={note}
+          setNote={setNote}
         />
       ))}
       <nav className="taskbar">
@@ -103,9 +108,10 @@ export default function Desktop() {
                 draggable="false"
               />
               <span>
-                {index === 0 && 'Web'}
+                {index === 0 && 'The project'}
                 {index === 1 && 'Tim Chat'}
                 {index === 2 && 'Web'}
+                {index === 4 && 'Bloc-note'}
               </span>
             </li>
           ))}

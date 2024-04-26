@@ -10,6 +10,8 @@ const Window = ({
   socket,
   windows,
   setWindows,
+  note,
+  setNote,
 }) => {
   const window = useRef(null);
   const [write, setWrite] = useState('');
@@ -147,7 +149,7 @@ const Window = ({
 
   const passwordSubmit = (e) => {
     e.preventDefault();
-    const password = e.target.querySelector('input').value;
+    const password = e.target.querySelector('input').value.toLowerCase();
     if (password === 'http://cern.html') {
       setWindows([...windows.filter((item) => item !== 0), 2]);
     }
@@ -175,10 +177,11 @@ const Window = ({
       onMouseDownCapture={changeZIndex}
     >
       <div className="window__header">
-        {indexWindow === 0 && <p>World Wide Web</p>}
+        {indexWindow === 0 && <p>The project</p>}
         {indexWindow === 1 && <p>Tim Berners-Lee Chat</p>}
-        {indexWindow === 2 && <p>Web berners-lee</p>}
+        {indexWindow === 2 && <p>World Wide Web</p>}
         {indexWindow === 3 && <p>Admin Chat</p>}
+        {indexWindow === 4 && <p>Bloc-note</p>}
         <button
           className="closeButton"
           onClick={() => {
@@ -191,7 +194,12 @@ const Window = ({
       {indexWindow === 0 && (
         <form className="window__web" onSubmit={passwordSubmit}>
           <label htmlFor="password">Enter the code : </label>
-          <input type="text" placeholder="•••••••" name="password" />
+          <input
+            type="text"
+            placeholder="••••••••••"
+            name="password"
+            autoComplete="off"
+          />
           <button className="window__web__input btn">Validate</button>
         </form>
       )}
@@ -254,6 +262,18 @@ const Window = ({
           <form onSubmit={(e) => handleAdminChat(e)}>
             <input type="text" placeholder="Message" />
           </form>
+        </div>
+      )}
+      {indexWindow === 4 && (
+        <div className="window__content note">
+          <textarea
+            className="note__area"
+            name=""
+            id=""
+            autoFocus
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+          ></textarea>
         </div>
       )}
     </div>

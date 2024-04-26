@@ -69,7 +69,7 @@ export default function Login({ setIsLoggedIn }) {
   const Login = (e) => {
     e.preventDefault();
     //si le password est bon
-    if (document.getElementById('password').value === 'test') {
+    if (document.getElementById('password').value === '1955') {
       setIsLoggedIn(true);
     } else {
       setErrorLogin(true);
@@ -117,8 +117,8 @@ export default function Login({ setIsLoggedIn }) {
                   type="password"
                   placeholder="Password"
                   id="password"
-                // defaultValue={`************`}
-                // readOnly
+                  // defaultValue={`************`}
+                  // readOnly
                 />
               </div>
             </div>
@@ -132,13 +132,10 @@ export default function Login({ setIsLoggedIn }) {
             </div>
           </div>
         </form>
-        {
-          errorLogin &&
+        {errorLogin && (
           <div className="error-message" ref={error}>
             <div className="window-login__header">
-              <div>
-                Incorrect password.
-              </div>
+              <div>Incorrect password.</div>
               <div></div>
             </div>
             <p>Incorrect password. Try again.</p>
@@ -146,7 +143,7 @@ export default function Login({ setIsLoggedIn }) {
               Fermé
             </button>
           </div>
-        }
+        )}
       </div>
     </>
   );

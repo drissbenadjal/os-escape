@@ -279,3 +279,15 @@
   max-height: 80vh;
   overflow: auto;
 }
+
+.note__area {
+  resize: none;
+  width: 100%;
+  height: 100%;
+  border: none;
+  flex: 1;
+
+  &:focus {
+    outline: none;
+  }
+}
