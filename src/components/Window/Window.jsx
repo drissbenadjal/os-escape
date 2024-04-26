@@ -7,7 +7,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
   const window = useRef(null);
   const [write, setWrite] = useState('');
   const formchat = useRef(null);
-  const socket = io('http://localhost:3001');
+  const socket = io('https://apimmievent.alwaysdata.net');
 
   useEffect(() => {
     if (indexWindow === 1) {
@@ -15,7 +15,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
       socket.on('receive-pc-message', (message) => {
         formchat.current.insertAdjacentHTML(
           'beforebegin',
-          `<p class="message-receive">${message}</p>`
+          `<p class="message-receive">$ ${message}</p>`
         );
       });
     }
@@ -29,6 +29,10 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
     setZIndex(zIndex + 1);
     window.current.style.zIndex = zIndex + 1;
   };
+
+  useEffect(() => {
+    changeZIndex();
+  }, []);
 
   useEffect(() => {
     if (!window.current) return;
@@ -114,7 +118,7 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
     socket.emit('send-pc-message', write);
     formchat.current.insertAdjacentHTML(
       'beforebegin',
-      `<p class="message">${write}</p>`
+      `<p class="message">> ${write}</p>`
     );
     formchat.current.querySelector('input').value = '';
     setWrite('');
@@ -128,8 +132,9 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
       onMouseDownCapture={changeZIndex}
     >
       <div className="window__header">
-        <p>{indexWindow === 0 && 'World Wide Web'}</p>
-        <p>{indexWindow === 1 && 'Tim Berners-Lee Chat'}</p>
+        {indexWindow === 0 && <p>World Wide Web</p>}
+        {indexWindow === 1 && <p>Tim Berners-Lee Chat</p>}
+        {indexWindow === 2 && <p>Web berners-lee</p>}
         <button
           className="closeButton"
           onClick={() => {
@@ -140,20 +145,62 @@ const Window = ({ indexWindow, closeWindow, zIndex, setZIndex }) => {
         </button>
       </div>
       {indexWindow === 0 && (
-        <form action="">
-          <label htmlFor="password">Password</label>
+        <form className="window__web" action="">
+          <label htmlFor="password">Enter the code : </label>
           <input type="text" placeholder="•••••••" name="password" />
+          <button className="window__web__input btn">Validate</button>
         </form>
       )}
       {indexWindow === 1 && (
         <div className="window__content">
           <div className="terminalChat">
             <div className="terminalChat__content">
-              <p>Ask me anything about Tim Berners-Lee</p>
-              <form onSubmit={handleSubmit} ref={formchat}>
-                <input type="text" onChange={(e) => setWrite(e.target.value)} />
+              <p className="first">You need some help ? Talk to Tim !</p>
+              <form
+                onSubmit={handleSubmit}
+                ref={formchat}
+                className="terminalChat__inputContainer"
+              >
+                <span>{`>`}</span>
+                <input
+                  type="text"
+                  className="terminalChat__input"
+                  onChange={(e) => setWrite(e.target.value)}
+                />
               </form>
             </div>
+          </div>
+        </div>
+      )}
+      {indexWindow === 2 && (
+        <div className="window__content">
+          <div className="search_bar">
+            <div className="search_bar__buttons">
+              <button className="btn" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="#000000"
+                    d="M177.5 414c-8.8 3.8-19 2-26-4.6l-144-136C2.7 268.9 0 262.6 0 256s2.7-12.9 7.5-17.4l144-136c7-6.6 17.2-8.4 26-4.6s14.5 12.5 14.5 22l0 72 288 0c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32l-288 0 0 72c0 9.6-5.7 18.2-14.5 22z"
+                  />
+                </svg>
+              </button>
+              <button className="btn" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path d="M334.5 414c8.8 3.8 19 2 26-4.6l144-136c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22l0 72L32 192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l288 0 0 72c0 9.6 5.7 18.2 14.5 22z" />
+                </svg>
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Search or enter website name"
+              defaultValue="https://cern.html/"
+              readOnly
+            />
+          </div>
+          <div className="internet">
+            <h1>
+              Hello, I'm Tim Berners-Lee, the inventor of the World Wide Web.
+            </h1>
           </div>
         </div>
       )}

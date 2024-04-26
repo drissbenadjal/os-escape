@@ -37,6 +37,10 @@ export default function Desktop() {
           <img src="./assets/images/terminal.png" alt="" draggable="false" />
           <span>Tim Chat</span>
         </li>
+        {/* <li onDoubleClick={(e) => openWindow(e, 2)}>
+          <img src="./assets/images/terminal.png" alt="" draggable="false" />
+          <span> test</span>
+        </li> */}
       </ul>
       {windows.map((index) => (
         <Window
