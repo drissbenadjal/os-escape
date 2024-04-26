@@ -117,6 +117,7 @@ export default function Login({ setIsLoggedIn }) {
                   type="password"
                   placeholder="Password"
                   id="password"
+                  autoComplete="off"
                   // defaultValue={`************`}
                   // readOnly
                 />

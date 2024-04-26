@@ -57,6 +57,31 @@ const Window = ({
   }, []);
 
   useEffect(() => {
+    console.log('windows');
+    if (windows.includes(10)) {
+      if (indexWindow === 0) {
+        changeZIndex();
+        setWindows([...windows.filter((item) => item !== 10)]);
+      }
+    } else if (windows.includes(11)) {
+      if (indexWindow === 1) {
+        changeZIndex();
+        setWindows([...windows.filter((item) => item !== 11)]);
+      }
+    } else if (windows.includes(12)) {
+      if (indexWindow === 2) {
+        changeZIndex();
+        setWindows([...windows.filter((item) => item !== 12)]);
+      }
+    } else if (windows.includes(14)) {
+      if (indexWindow === 4) {
+        changeZIndex();
+        setWindows([...windows.filter((item) => item !== 14)]);
+      }
+    }
+  }, [windows]);
+
+  useEffect(() => {
     if (!window.current) return;
     var fenetre = window.current;
     move(fenetre);

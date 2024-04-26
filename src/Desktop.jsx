@@ -11,7 +11,18 @@ export default function Desktop() {
 
   const openWindow = (e, index) => {
     e.preventDefault();
-    if (windows.includes(index)) return;
+    if (windows.includes(index)) {
+      if (index === 0) {
+        setWindows([...windows, 10]);
+      } else if (index === 1) {
+        setWindows([...windows, 11]);
+      } else if (index === 2) {
+        setWindows([...windows, 12]);
+      } else if (index === 4) {
+        setWindows([...windows, 14]);
+      }
+      return;
+    }
     setWindows([...windows, index]);
   };
 
@@ -101,7 +112,11 @@ export default function Desktop() {
         </div>
         <ul className="windows-active">
           {windows.map((index) => (
-            <li key={index} className="nav-link cursor-hover">
+            <li
+              key={index}
+              className="nav-link cursor-hover"
+              onClick={(e) => openWindow(e, index)}
+            >
               <img
                 src={`./assets/images/${getIcon(index)}.png`}
                 alt=""
