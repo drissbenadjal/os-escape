@@ -33,8 +33,12 @@ export default function Desktop() {
 
     //quand on fait shift + i + a
     window.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'A' || e.key === 'a') {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
         openWindowAdmin();
+      } else if (e.ctrlKey && e.shiftKey && e.key === 'a') {
+        openWindowAdmin();
+      } else {
+        return;
       }
     });
   }, []);
