@@ -313,13 +313,9 @@ const Window = ({
             />
           </div>
           <div className="internet">
-            <h1 id='win__title'>
-              Felicitation ! Vous avez sauvez le web !
-            </h1>
-            <video src="" id="video" autoPlay muted>
-            </video>
-            <video src="./assets/videos/videofin.mp4" id="videofin">
-            </video>
+            <h1 id="win__title">Félicitation ! Vous avez sauvé le web !</h1>
+            <video src="" id="video" autoPlay muted></video>
+            <video src="./assets/videos/videofin.mp4" id="videofin"></video>
           </div>
         </div>
       )}
