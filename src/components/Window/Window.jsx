@@ -54,7 +54,45 @@ const Window = ({
 
   useEffect(() => {
     changeZIndex();
+
+    const video = document.getElementById('video');
+    //mettre la camera du pc
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        video.srcObject = stream;
+      });
   }, []);
+
+  useEffect(() => {
+    if (windows.includes(2)) {
+      const winTitle = document.getElementById('win__title');
+      const video = document.getElementById('video');
+      const videofin = document.getElementById('videofin');
+      setTimeout(() => {
+        winTitle.style.display = 'none';
+        videofin.style.opacity = 1;
+        videofin.play();
+
+        //attendre 23s
+        setTimeout(() => {
+          video.style.opacity = 1;
+        }, 22500);
+
+        setTimeout(() => {
+          video.style.opacity = 0;
+        }, 38200);
+        //attendre 39s
+        setTimeout(() => {
+          videofin.style.opacity = 0;
+          winTitle.style.display = 'block';
+          videofin.pause();
+          videofin.currentTime = 0;
+          video.play();
+        }, 39000);
+      }, 5000);
+    }
+  }, [windows]);
 
   useEffect(() => {
     console.log('windows');
@@ -175,7 +213,7 @@ const Window = ({
   const passwordSubmit = (e) => {
     e.preventDefault();
     const password = e.target.querySelector('input').value.toLowerCase();
-    if (password === 'http://cern.html') {
+    if (password === 'http://project.html') {
       setWindows([...windows.filter((item) => item !== 0), 2]);
     }
   };
@@ -270,14 +308,18 @@ const Window = ({
             <input
               type="text"
               placeholder="Search or enter website name"
-              defaultValue="http://cern.html"
+              defaultValue="http://project.html"
               readOnly
             />
           </div>
           <div className="internet">
-            <h1>
-              Hello, I'm Tim Berners-Lee, the inventor of the World Wide Web.
+            <h1 id='win__title'>
+              Felicitation ! Vous avez sauvez le web !
             </h1>
+            <video src="" id="video" autoPlay muted>
+            </video>
+            <video src="./assets/videos/videofin.mp4" id="videofin">
+            </video>
           </div>
         </div>
       )}

@@ -258,6 +258,24 @@
   background-color: #fff;
   overflow: auto;
 
+  #video {
+    position: absolute;
+    z-index: 1;
+    bottom: 83px;
+    left: 0;
+    width: 50%;
+    height: 236.5px;
+    object-fit: cover;
+    // height: 100%;
+    opacity: 0;
+  }
+
+  #videofin {
+    width: 100%;
+    // height: 100%;
+    opacity: 0;
+  }
+
   h1 {
     font-size: 1rem;
   }
