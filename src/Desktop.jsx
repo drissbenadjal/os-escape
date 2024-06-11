@@ -1,9 +1,11 @@
 import Window from './components/Window/Window';
+import { Popup } from './components/Popup/Popup';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 export default function Desktop() {
   const [windows, setWindows] = useState([]);
+  const [popup, setPopup] = useState(true);
   const [zIndex, setZIndex] = useState(1);
   const [time, setTime] = useState(new Date());
   const [note, setNote] = useState('');
@@ -105,6 +107,7 @@ export default function Desktop() {
           setNote={setNote}
         />
       ))}
+      <Popup zIndex={zIndex} />
       <nav className="taskbar">
         <div className="nav-link cursor-hover">
           <img src="./assets/images/logo.svg" alt="" />
