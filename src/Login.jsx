@@ -115,7 +115,7 @@ export default function Login({ setIsLoggedIn }) {
                 </label>
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder="••••"
                   id="password"
                   autoComplete="off"
                   // defaultValue={`************`}

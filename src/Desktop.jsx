@@ -147,7 +147,7 @@ export default function Desktop() {
         </li>
         <li onDoubleClick={(e) => openWindow(e, 1)}>
           <img src="./assets/images/terminal.png" alt="" draggable="false" />
-          <span>Tim Chat</span>
+          <span>Need help ?</span>
         </li>
         <li onDoubleClick={(e) => openWindow(e, 4)}>
           <img src="./assets/images/note.png" alt="" draggable="false" />
@@ -204,7 +204,7 @@ export default function Desktop() {
               />
               <span>
                 {index === 0 && 'The project'}
-                {index === 1 && 'Tim Chat'}
+                {index === 1 && 'Need help ?'}
                 {index === 2 && 'Web'}
                 {index === 4 && 'Bloc-note'}
               </span>
