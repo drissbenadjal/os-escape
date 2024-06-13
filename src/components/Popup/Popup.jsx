@@ -1,4 +1,4 @@
-import './popup.scss';
+import './Popup.scss';
 import { useState, useEffect } from 'react';
 import { socket } from '../../utils/socket';
 const audio = new Audio('/assets/audios/windows-error.mp3');

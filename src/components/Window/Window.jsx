@@ -69,6 +69,7 @@ const Window = ({
       const winTitle = document.getElementById('win__title');
       const video = document.getElementById('video');
       const videofin = document.getElementById('videofin');
+      setWin(true);
       setTimeout(() => {
         winTitle.style.display = 'none';
         videofin.style.opacity = 1;
@@ -313,7 +314,7 @@ const Window = ({
             />
           </div>
           <div className="internet">
-            <h1 id="win__title">Félicitation ! Vous avez sauvé le web !</h1>
+            <h1 id="win__title">Félicitations ! Vous avez sauvé le web !</h1>
             <video src="" id="video" autoPlay muted></video>
             <video src="./assets/videos/videofin.mp4" id="videofin"></video>
           </div>
