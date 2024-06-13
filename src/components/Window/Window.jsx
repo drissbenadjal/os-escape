@@ -1,5 +1,6 @@
 import './Window.scss';
 import { useEffect, useRef, useState } from 'react';
+const audio = new Audio('/assets/audios/message.mp3');
 
 // eslint-disable-next-line react/prop-types
 const Window = ({
@@ -26,6 +27,7 @@ const Window = ({
           'beforebegin',
           `<p class="message-receive">$ ${message}</p>`
         );
+        audio.play();
 
         // scroll to bottom
         const chat = document.querySelector('.terminalChat__content');
@@ -217,6 +219,7 @@ const Window = ({
     const password = e.target.querySelector('input').value.toLowerCase();
     if (password === 'http://project.html') {
       setWindows([...windows.filter((item) => item !== 0), 2]);
+      setWin(true);
     }
   };
 

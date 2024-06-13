@@ -141,7 +141,7 @@ export default function Login({ setIsLoggedIn }) {
             </div>
             <p>Incorrect password. Try again.</p>
             <button className="btn" onClick={() => setErrorLogin(false)}>
-              Fermé
+              Fermer
             </button>
           </div>
         )}
