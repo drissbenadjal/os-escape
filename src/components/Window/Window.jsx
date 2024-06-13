@@ -12,6 +12,7 @@ const Window = ({
   setWindows,
   note,
   setNote,
+  setWin,
 }) => {
   const window = useRef(null);
   const [write, setWrite] = useState('');
