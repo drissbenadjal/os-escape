@@ -90,7 +90,7 @@ const Window = ({
           videofin.currentTime = 0;
           video.play();
         }, 39000);
-      }, 5000);
+      }, 1800);
     }
   }, [windows]);
 
